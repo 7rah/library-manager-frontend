@@ -5,6 +5,9 @@ const tokens = {
   },
   editor: {
     token: 'editor-token'
+  },
+  'admin@admin.com': {
+    token: 'admin-token'
   }
 }
 
@@ -26,12 +29,12 @@ const users = {
 module.exports = [
   // user login
   {
-    url: '/vue-admin-template/user/login',
+    url: '/books-manager/user/login',
     type: 'post',
     response: config => {
       const { username } = config.body
-      const token = tokens[username]
-
+      const token = tokens['admin']
+/*
       // mock error
       if (!token) {
         return {
@@ -39,7 +42,7 @@ module.exports = [
           message: 'Account and password are incorrect.'
         }
       }
-
+*/
       return {
         code: 20000,
         data: token
@@ -47,13 +50,25 @@ module.exports = [
     }
   },
 
+  // user register
+  {
+    url: '/books-manager/user/register',
+    type: 'post',
+    response: config => {
+      return {
+        code: 60205,
+        message: 'register error'
+      }
+    }
+  },
+
   // get user info
   {
-    url: '/vue-admin-template/user/info\.*',
+    url: '/books-manager/user/info\.*',
     type: 'get',
     response: config => {
-      const { token } = config.query
-      const info = users[token]
+      // const { token } = 'admin-token'
+      const info = users['admin-token']
 
       // mock error
       if (!info) {
@@ -72,7 +87,7 @@ module.exports = [
 
   // user logout
   {
-    url: '/vue-admin-template/user/logout',
+    url: '/books-manager/user/logout',
     type: 'post',
     response: _ => {
       return {
